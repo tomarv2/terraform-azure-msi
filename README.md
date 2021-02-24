@@ -3,6 +3,8 @@
         <img src="https://img.shields.io/github/license/tomarv2/terraform-azure-msi" /></a>
     <a href="https://img.shields.io/github/v/tag/tomarv2/terraform-azure-msi" alt="GitHub tag">
         <img src="https://img.shields.io/github/v/tag/tomarv2/terraform-azure-msi" /></a>
+    <a href="https://github.com/tomarv2/terraform-azure-msi/pulse" alt="Activity">
+        <img src="https://img.shields.io/github/commit-activity/m/tomarv2/terraform-azure-msi" /></a>
     <a href="https://img.shields.io/stackexchange/stackoverflow/r/6679867" alt="Stack Exchange reputation">
         <img src="https://img.shields.io/stackexchange/stackoverflow/r/6679867" /></a>
     <a href="https://discord.gg/XH975bzN">
