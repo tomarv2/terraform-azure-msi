@@ -23,8 +23,8 @@
 - Azure provider version [2.48.0](https://registry.terraform.io/providers/hashicorp/azurerm/latest)
 - `main` branch: Provider versions not pinned to keep up with Terraform releases
 - `tags` releases: Tags are pinned with versions (use latest     
-        <a href="https://img.shields.io/github/v/tag/tomarv2/terraform-azure-msi" alt="GitHub tag">
-        <img src="https://img.shields.io/github/v/tag/tomarv2/terraform-azure-msi" /></a> 
+        <a href="https://github.com/tomarv2/terraform-azure-msi/tags" alt="GitHub tag">
+        <img src="https://img.shields.io/github/v/tag/tomarv2/terraform-azure-msi" /></a>
   in your releases)
 
 **NOTE:** 
