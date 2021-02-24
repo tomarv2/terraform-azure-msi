@@ -1,4 +1,7 @@
 [![](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
+![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/tomarv2/terraform-azure-msi?style=plastic)
+![Stack Exchange reputation](https://img.shields.io/stackexchange/stackoverflow/r/6679867)
+![Twitter URL](https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Ftwitter.com%2FVarunTomar2019)
 # Azure Managed Service Identity
 
 ## Versions
