@@ -1,5 +1,5 @@
 <p align="center">
-    <a href="hhttps://www.apache.org/licenses/LICENSE-2.0" alt="license">
+    <a href="https://www.apache.org/licenses/LICENSE-2.0" alt="license">
         <img src="https://img.shields.io/github/license/tomarv2/terraform-azure-msi" /></a>
     <a href="https://img.shields.io/github/v/tag/tomarv2/terraform-azure-msi" alt="GitHub tag">
         <img src="https://img.shields.io/github/v/tag/tomarv2/terraform-azure-msi" /></a>
