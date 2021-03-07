@@ -52,49 +52,87 @@ export TF_AZURE_CONTAINER=tfstate # Output of remote_state.sh
 export ARM_ACCESS_KEY=xxxxxxxxxx # Output of remote_state.sh
 ```  
 
-- Update:
-```
-example/custom/sample.tfvars
-```
-
-- Change to: 
-```
-example/base
-``` 
+- Update `examples/main.tf`
 
 - Run and verify the output before deploying:
 ```
-tf -cloud aws plan -var-file <path to .tfvars file> -var "subscription_id=<>" \
+tf -cloud azure plan -var-file <path to .tfvars file> -var "subscription_id=<>" \
 -var "client_id=<>" -var "client_secret=<>" -var "tenant_id=<>"
 ```
 
 - Run below to deploy:
 ```
-tf -cloud aws apply -var-file <path to .tfvars file> -var "subscription_id=<>" \
+tf -cloud azure apply -var-file <path to .tfvars file> -var "subscription_id=<>" \
 -var "client_id=<>" -var "client_secret=<>" -var "tenant_id=<>"
 ```
 
 - Run below to destroy:
 ```
-tf -cloud aws destroy -var-file <path to .tfvars file> -var "subscription_id=<>" \
+tf -cloud azure destroy -var-file <path to .tfvars file> -var "subscription_id=<>" \
 -var "client_id=<>" -var "client_secret=<>" -var "tenant_id=<>"
 ```
 
-Please refer to example directory [link](example) for references.
+> ❗️ **Important** - Two variables are required for using `tf` package:
+>
+> - teamid
+> - prjid
+>
+> These variables are required to set backend path in the remote storage.
+> Variables can be defined using:
+>
+> - As `inline variables` e.g.: `-var='teamid=demo-team' -var='prjid=demo-project'`
+> - Inside `.tfvars` file e.g.: `-var-file=<tfvars file location> `
+>
+> For more information refer to [Terraform documentation](https://www.terraform.io/docs/language/values/variables.html)
+
+
+```
+module "msi" {
+  source = "../"
+
+  add_msi         = true
+  rg_name         = "demo-rg"
+  email           = 'demo@demo.com'
+  client_id       = var.client_id
+  client_secret   = var.client_secret
+  subscription_id = var.subscription_id
+  tenant_id       = var.tenant_id
+  # ---------------------------------------------
+  # Note: Do not change teamid and prjid once set.
+  teamid = var.teamid
+  prjid  = var.prjid
+}
+```
+
+Please refer to examples directory [link](examples) for references.
+
+## Requirements
+
+| Name | Version |
+|------|---------|
+| terraform | >= 0.14 |
+| azurerm | ~> 2.48 |
+
+## Providers
+
+| Name | Version |
+|------|---------|
+| azurerm | ~> 2.48 |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| add\_msi | n/a | `bool` | `false` | no |
+| add\_msi | Do you want to add MSI(Note: this is a feature flag) | `bool` | `false` | no |
 | client\_id | n/a | `any` | n/a | yes |
 | client\_secret | n/a | `any` | n/a | yes |
-| email | Email address to be used to for tagging | `any` | n/a | yes |
+| email | email address to be used for tagging (suggestion: use group email address) | `any` | n/a | yes |
 | msi\_depends\_on | n/a | `any` | `null` | no |
-| prjid | Name of the project/stack e.g: mystack, nifieks. Should not be changed after running 'tf apply'. | `any` | n/a | yes |
+| msi\_location | n/a | `string` | `"eastus"` | no |
+| prjid | (Required) Name of the project/stack e.g: mystack, nifieks, demoaci. Should not be changed after running 'tf apply' | `any` | n/a | yes |
 | rg\_name | n/a | `any` | n/a | yes |
 | subscription\_id | n/a | `any` | n/a | yes |
-| teamid | Name of the team or group e.g. devops, dataengineering. Should not be changed after running 'tf apply'. | `any` | n/a | yes |
+| teamid | (Required) Name of the team/group e.g. devops, dataengineering. Should not be changed after running 'tf apply' | `any` | n/a | yes |
 | tenant\_id | n/a | `any` | n/a | yes |
 
 ## Outputs
@@ -102,3 +140,5 @@ Please refer to example directory [link](example) for references.
 | Name | Description |
 |------|-------------|
 | msi\_id | The ID of the MSI created. |
+| msi\_name | n/a |
+| msi\_principal\_id | The ID of the Principal (User, Group or Service Principal) to assign the Role Definition to. |

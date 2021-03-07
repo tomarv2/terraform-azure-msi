@@ -22,7 +22,7 @@ variable "tenant_id" {}
 
 variable "add_msi" {
   description = "Do you want to add MSI(Note: this is a feature flag)"
-  default = false
+  default     = false
 }
 
 variable "msi_depends_on" {
