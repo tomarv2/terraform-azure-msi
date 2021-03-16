@@ -15,7 +15,7 @@
             alt="follow on Twitter"></a>
 </p>
 
-# Azure Managed Service Identity
+# Terraform module for Azure Managed Service Identity(MSI)
 
 ## Versions
 
@@ -85,14 +85,11 @@ tf -cloud azure destroy -var-file <path to .tfvars file> -var "subscription_id=<
 >
 > For more information refer to [Terraform documentation](https://www.terraform.io/docs/language/values/variables.html)
 
-
 ```
 module "msi" {
   source = "../"
 
-  add_msi         = true
   rg_name         = "demo-rg"
-  email           = 'demo@demo.com'
   client_id       = var.client_id
   client_secret   = var.client_secret
   subscription_id = var.subscription_id
@@ -126,7 +123,6 @@ Please refer to examples directory [link](examples) for references.
 | add\_msi | Do you want to add MSI(Note: this is a feature flag) | `bool` | `false` | no |
 | client\_id | n/a | `any` | n/a | yes |
 | client\_secret | n/a | `any` | n/a | yes |
-| email | email address to be used for tagging (suggestion: use group email address) | `any` | n/a | yes |
 | msi\_depends\_on | n/a | `any` | `null` | no |
 | msi\_location | n/a | `string` | `"eastus"` | no |
 | prjid | (Required) Name of the project/stack e.g: mystack, nifieks, demoaci. Should not be changed after running 'tf apply' | `any` | n/a | yes |
