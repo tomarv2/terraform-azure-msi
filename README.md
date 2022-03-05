@@ -19,15 +19,15 @@
 
 ## Versions
 
-- Module tested for Terraform 0.14.
-- Azure provider version [2.48.0](https://registry.terraform.io/providers/hashicorp/azurerm/latest)
+- Module tested for Terraform 1.0.1.
+- Azure provider version [2.98](https://registry.terraform.io/providers/hashicorp/azurerm/latest)
 - `main` branch: Provider versions not pinned to keep up with Terraform releases
-- `tags` releases: Tags are pinned with versions (use latest     
+- `tags` releases: Tags are pinned with versions (use latest
         <a href="https://github.com/tomarv2/terraform-azure-msi/tags" alt="GitHub tag">
         <img src="https://img.shields.io/github/v/tag/tomarv2/terraform-azure-msi" /></a>
   in your releases)
 
-**NOTE:** 
+**NOTE:**
 
 - Read more on [tfremote](https://github.com/tomarv2/tfremote)
 
@@ -35,7 +35,7 @@
 
 Recommended method:
 
-- Create python 3.6+ virtual environment 
+- Create python 3.6+ virtual environment
 ```
 python3 -m venv <venv name>
 ```
@@ -50,7 +50,7 @@ pip install tfremote
 export TF_AZURE_STORAGE_ACCOUNT=tfstatexxxxx # Output of remote_state.sh
 export TF_AZURE_CONTAINER=tfstate # Output of remote_state.sh
 export ARM_ACCESS_KEY=xxxxxxxxxx # Output of remote_state.sh
-```  
+```
 
 - Update `examples/main.tf`
 
@@ -90,10 +90,7 @@ module "msi" {
   source = "../"
 
   rg_name         = "demo-rg"
-  client_id       = var.client_id
-  client_secret   = var.client_secret
-  subscription_id = var.subscription_id
-  tenant_id       = var.tenant_id
+
   # ---------------------------------------------
   # Note: Do not change teamid and prjid once set.
   teamid = var.teamid
@@ -125,10 +122,10 @@ Please refer to examples directory [link](examples) for references.
 | client\_secret | n/a | `any` | n/a | yes |
 | msi\_depends\_on | n/a | `any` | `null` | no |
 | msi\_location | n/a | `string` | `"eastus"` | no |
-| prjid | (Required) Name of the project/stack e.g: mystack, nifieks, demoaci. Should not be changed after running 'tf apply' | `any` | n/a | yes |
+| prjid | Name of the project/stack e.g: mystack, nifieks, demoaci. Should not be changed after running 'tf apply' | `any` | n/a | yes |
 | rg\_name | n/a | `any` | n/a | yes |
 | subscription\_id | n/a | `any` | n/a | yes |
-| teamid | (Required) Name of the team/group e.g. devops, dataengineering. Should not be changed after running 'tf apply' | `any` | n/a | yes |
+| teamid | Name of the team/group e.g. devops, dataengineering. Should not be changed after running 'tf apply' | `any` | n/a | yes |
 | tenant\_id | n/a | `any` | n/a | yes |
 
 ## Outputs
