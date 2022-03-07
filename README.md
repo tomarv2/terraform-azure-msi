@@ -25,9 +25,9 @@
         <img src="https://img.shields.io/github/v/tag/tomarv2/terraform-azure-msi" /></a>
   in your releases)
 
-### Usage
+## Usage
 
-#### Option 1:
+### Option 1:
 
 ```
 terrafrom init
@@ -37,9 +37,9 @@ terraform destroy -var='teamid=tryme' -var='prjid=project1'
 ```
 **Note:** With this option please take care of remote state storage
 
-#### Option 2:
+### Option 2:
 
-##### Recommended method (stores remote state in S3 using `prjid` and `teamid` to create directory structure):
+#### Recommended method (stores remote state in storage using `prjid` and `teamid` to create directory structure):
 
 - Create python 3.8+ virtual environment
 ```
@@ -53,37 +53,39 @@ pip install tfremote --upgrade
 
 - Set below environment variables:
 ```
-export TF_AWS_BUCKET=<remote state bucket name>
-export TF_AWS_BUCKET_REGION=us-west-2
-export TF_AWS_PROFILE=<profile from ~/.ws/credentials>
+export TF_AZURE_STORAGE_ACCOUNT=tfstatexxxxx # Output of remote_state.sh
+export TF_AZURE_CONTAINER=tfstate # Output of remote_state.sh
+export ARM_ACCESS_KEY=xxxxxxxxxx # Output of remote_state.sh
 ```
 
-or
-
-- Set below environment variables:
-```
-export TF_AWS_BUCKET=<remote state bucket name>
-export TF_AWS_BUCKET_REGION=us-west-2
-export AWS_ACCESS_KEY_ID=<aws_access_key_id>
-export AWS_SECRET_ACCESS_KEY=<aws_secret_access_key>
-```
-
-- Updated `examples` directory with required values.
+- Updated `examples` directory to required values
 
 - Run and verify the output before deploying:
 ```
-tf -c=aws plan -var='teamid=foo' -var='prjid=bar'
+tf -c=azure plan -var='teamid=foo' -var='prjid=bar'
 ```
 
 - Run below to deploy:
 ```
-tf -c=aws apply -var='teamid=foo' -var='prjid=bar'
+tf -c=azure apply -var='teamid=foo' -var='prjid=bar'
 ```
 
 - Run below to destroy:
 ```
-tf -c=aws destroy -var='teamid=foo' -var='prjid=bar'
+tf -c=azure destroy -var='teamid=foo' -var='prjid=bar'
 ```
+**NOTE:**
+
+- Read more on [tfremote](https://github.com/tomarv2/tfremote)
+
+### [Authenticate with Azure](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs)
+
+Terraform supports a number of different methods for authenticating to Azure:
+
+- Authenticating to Azure using the Azure CLI
+- Authenticating to Azure using Managed Service Identity
+- Authenticating to Azure using a Service Principal and a Client Certificate
+- Authenticating to Azure using a Service Principal and a Client Secret
 
 **Note:** Read more on [tfremote](https://github.com/tomarv2/tfremote)
 Please refer to examples directory [link](examples) for references.
