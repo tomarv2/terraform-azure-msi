@@ -1,4 +1,6 @@
 <p align="center">
+    <a href="https://github.com/tomarv2/terraform-azure-msi/actions/workflows/pre-commit.yml" alt="Pre Commit">
+        <img src="https://github.com/tomarv2/terraform-azure-msi/actions/workflows/pre-commit.yml/badge.svg?branch=main" /></a>
     <a href="https://www.apache.org/licenses/LICENSE-2.0" alt="license">
         <img src="https://img.shields.io/github/license/tomarv2/terraform-azure-msi" /></a>
     <a href="https://github.com/tomarv2/terraform-azure-msi/tags" alt="GitHub tag">
@@ -6,18 +8,14 @@
     <a href="https://github.com/tomarv2/terraform-azure-msi/pulse" alt="Activity">
         <img src="https://img.shields.io/github/commit-activity/m/tomarv2/terraform-azure-msi" /></a>
     <a href="https://stackoverflow.com/users/6679867/tomarv2" alt="Stack Exchange reputation">
-        <img src="https://img.shields.io/stackexchange/stackoverflow/r/6679867" /></a>
-    <a href="https://discord.gg/XH975bzN">
-        <img src="https://img.shields.io/discord/813961944443912223?logo=discord"
-            alt="chat on Discord"></a>
-    <a href="https://twitter.com/intent/follow?screen_name=varuntomar2019">
-        <img src="https://img.shields.io/twitter/follow/varuntomar2019?style=social&logo=twitter"
-            alt="follow on Twitter"></a>
+        <img src="https://img.shields.io/stackexchange/stackoverflow/r/6679867"></a>
+    <a href="https://twitter.com/intent/follow?screen_name=varuntomar2019" alt="follow on Twitter">
+        <img src="https://img.shields.io/twitter/follow/varuntomar2019?style=social&logo=twitter"></a>
 </p>
 
-# Terraform module for Azure Managed Service Identity(MSI)
+## Terraform module for Azure Managed Service Identity(MSI)
 
-## Versions
+### Versions
 
 - Module tested for Terraform 1.0.1.
 - Azure provider version [2.98](https://registry.terraform.io/providers/hashicorp/azurerm/latest)
@@ -27,71 +25,88 @@
         <img src="https://img.shields.io/github/v/tag/tomarv2/terraform-azure-msi" /></a>
   in your releases)
 
-**NOTE:**
+### Usage
 
-- Read more on [tfremote](https://github.com/tomarv2/tfremote)
+#### Option 1:
 
-## Usage
+```
+terrafrom init
+terraform plan -var='teamid=tryme' -var='prjid=project1'
+terraform apply -var='teamid=tryme' -var='prjid=project1'
+terraform destroy -var='teamid=tryme' -var='prjid=project1'
+```
+**Note:** With this option please take care of remote state storage
 
-Recommended method:
+#### Option 2:
 
-- Create python 3.6+ virtual environment
+##### Recommended method (stores remote state in S3 using `prjid` and `teamid` to create directory structure):
+
+- Create python 3.8+ virtual environment
 ```
 python3 -m venv <venv name>
 ```
 
 - Install package:
 ```
-pip install tfremote
+pip install tfremote --upgrade
 ```
 
 - Set below environment variables:
 ```
-export TF_AZURE_STORAGE_ACCOUNT=tfstatexxxxx # Output of remote_state.sh
-export TF_AZURE_CONTAINER=tfstate # Output of remote_state.sh
-export ARM_ACCESS_KEY=xxxxxxxxxx # Output of remote_state.sh
+export TF_AWS_BUCKET=<remote state bucket name>
+export TF_AWS_BUCKET_REGION=us-west-2
+export TF_AWS_PROFILE=<profile from ~/.ws/credentials>
 ```
 
-- Update `examples/main.tf`
+or
+
+- Set below environment variables:
+```
+export TF_AWS_BUCKET=<remote state bucket name>
+export TF_AWS_BUCKET_REGION=us-west-2
+export AWS_ACCESS_KEY_ID=<aws_access_key_id>
+export AWS_SECRET_ACCESS_KEY=<aws_secret_access_key>
+```
+
+- Updated `examples` directory with required values.
 
 - Run and verify the output before deploying:
 ```
-tf -cloud azure plan -var-file <path to .tfvars file> -var "subscription_id=<>" \
--var "client_id=<>" -var "client_secret=<>" -var "tenant_id=<>"
+tf -c=aws plan -var='teamid=foo' -var='prjid=bar'
 ```
 
 - Run below to deploy:
 ```
-tf -cloud azure apply -var-file <path to .tfvars file> -var "subscription_id=<>" \
--var "client_id=<>" -var "client_secret=<>" -var "tenant_id=<>"
+tf -c=aws apply -var='teamid=foo' -var='prjid=bar'
 ```
 
 - Run below to destroy:
 ```
-tf -cloud azure destroy -var-file <path to .tfvars file> -var "subscription_id=<>" \
--var "client_id=<>" -var "client_secret=<>" -var "tenant_id=<>"
+tf -c=aws destroy -var='teamid=foo' -var='prjid=bar'
 ```
 
-> ❗️ **Important** - Two variables are required for using `tf` package:
->
-> - teamid
-> - prjid
->
-> These variables are required to set backend path in the remote storage.
-> Variables can be defined using:
->
-> - As `inline variables` e.g.: `-var='teamid=demo-team' -var='prjid=demo-project'`
-> - Inside `.tfvars` file e.g.: `-var-file=<tfvars file location> `
->
-> For more information refer to [Terraform documentation](https://www.terraform.io/docs/language/values/variables.html)
+**Note:** Read more on [tfremote](https://github.com/tomarv2/tfremote)
+Please refer to examples directory [link](examples) for references.
 
 ```
+terraform {
+  required_version = ">= 1.0.1"
+  required_providers {
+    azurerm = {
+      version = "~> 2.98"
+    }
+  }
+}
+
+provider "azurerm" {
+  features {}
+}
+
 module "msi" {
   source = "../"
 
-  rg_name         = "demo-rg"
-
-  # ---------------------------------------------
+  resource_group_name = "demo-resource_group"
+  # -----------------------------------------
   # Note: Do not change teamid and prjid once set.
   teamid = var.teamid
   prjid  = var.prjid
@@ -104,34 +119,40 @@ Please refer to examples directory [link](examples) for references.
 
 | Name | Version |
 |------|---------|
-| terraform | >= 0.14 |
-| azurerm | ~> 2.48 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0.1 |
+| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | ~> 2.98 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| azurerm | ~> 2.48 |
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 2.48.0 |
+
+## Modules
+
+No modules.
+
+## Resources
+
+| Name | Type |
+|------|------|
+| [azurerm_user_assigned_identity.identity](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/user_assigned_identity) | resource |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| add\_msi | Do you want to add MSI(Note: this is a feature flag) | `bool` | `false` | no |
-| client\_id | n/a | `any` | n/a | yes |
-| client\_secret | n/a | `any` | n/a | yes |
-| msi\_depends\_on | n/a | `any` | `null` | no |
-| msi\_location | n/a | `string` | `"eastus"` | no |
-| prjid | Name of the project/stack e.g: mystack, nifieks, demoaci. Should not be changed after running 'tf apply' | `any` | n/a | yes |
-| rg\_name | n/a | `any` | n/a | yes |
-| subscription\_id | n/a | `any` | n/a | yes |
-| teamid | Name of the team/group e.g. devops, dataengineering. Should not be changed after running 'tf apply' | `any` | n/a | yes |
-| tenant\_id | n/a | `any` | n/a | yes |
+| <a name="input_add_msi"></a> [add\_msi](#input\_add\_msi) | feature flag to deploy this resource or not | `bool` | `false` | no |
+| <a name="input_msi_depends_on"></a> [msi\_depends\_on](#input\_msi\_depends\_on) | n/a | `string` | `null` | no |
+| <a name="input_msi_location"></a> [msi\_location](#input\_msi\_location) | n/a | `string` | `"westus2"` | no |
+| <a name="input_prjid"></a> [prjid](#input\_prjid) | Name of the project/stack e.g: mystack, nifieks, demoaci. Should not be changed after running 'tf apply' | `string` | n/a | yes |
+| <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | Resource Group Name | `string` | n/a | yes |
+| <a name="input_teamid"></a> [teamid](#input\_teamid) | Name of the team/group e.g. devops, dataengineering. Should not be changed after running 'tf apply' | `string` | n/a | yes |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| msi\_id | The ID of the MSI created. |
-| msi\_name | n/a |
-| msi\_principal\_id | The ID of the Principal (User, Group or Service Principal) to assign the Role Definition to. |
+| <a name="output_msi_id"></a> [msi\_id](#output\_msi\_id) | The ID of the MSI created |
+| <a name="output_msi_name"></a> [msi\_name](#output\_msi\_name) | MSI name |
+| <a name="output_msi_principal_id"></a> [msi\_principal\_id](#output\_msi\_principal\_id) | The ID of the Principal (User, Group or Service Principal) to assign the Role Definition |
