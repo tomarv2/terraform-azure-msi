@@ -18,7 +18,7 @@
 ### Versions
 
 - Module tested for Terraform 1.0.1.
-- Azure provider version [2.98](https://registry.terraform.io/providers/hashicorp/azurerm/latest)
+- Azure provider version [3.21.1](https://registry.terraform.io/providers/hashicorp/azurerm/latest)
 - `main` branch: Provider versions not pinned to keep up with Terraform releases
 - `tags` releases: Tags are pinned with versions (use latest
         <a href="https://github.com/tomarv2/terraform-azure-msi/tags" alt="GitHub tag">
@@ -39,7 +39,7 @@ terraform destroy -var='teamid=tryme' -var='prjid=project1'
 
 #### Option 2:
 
-##### Recommended method (stores remote state in S3 using `prjid` and `teamid` to create directory structure):
+##### Recommended method (stores remote state in remote backend(S3,  Azure storage, or Google bucket) using `prjid` and `teamid` to create directory structure):
 
 - Create python 3.8+ virtual environment
 ```
@@ -118,16 +118,11 @@ Please refer to examples directory [link](examples) for references.
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 
-| Name | Version |
-|------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0.1 |
-| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | ~> 2.98 |
+No requirements.
 
 ## Providers
 
-| Name | Version |
-|------|---------|
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | ~> 2.98 |
+No providers.
 
 ## Modules
 
@@ -135,26 +130,13 @@ No modules.
 
 ## Resources
 
-| Name | Type |
-|------|------|
-| [azurerm_user_assigned_identity.identity](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/user_assigned_identity) | resource |
+No resources.
 
 ## Inputs
 
-| Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
-| <a name="input_add_msi"></a> [add\_msi](#input\_add\_msi) | feature flag to deploy this resource or not | `bool` | `true` | no |
-| <a name="input_extra_tags"></a> [extra\_tags](#input\_extra\_tags) | Additional tags to associate | `map(string)` | `{}` | no |
-| <a name="input_location"></a> [location](#input\_location) | Specifies the supported Azure location where the resource exists | `string` | `"westus2"` | no |
-| <a name="input_prjid"></a> [prjid](#input\_prjid) | Name of the project/stack e.g: mystack, nifieks, demoaci. Should not be changed after running 'tf apply' | `string` | n/a | yes |
-| <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | Name of the resource group | `string` | n/a | yes |
-| <a name="input_teamid"></a> [teamid](#input\_teamid) | Name of the team/group e.g. devops, dataengineering. Should not be changed after running 'tf apply' | `string` | n/a | yes |
+No inputs.
 
 ## Outputs
 
-| Name | Description |
-|------|-------------|
-| <a name="output_msi_id"></a> [msi\_id](#output\_msi\_id) | The ID of the MSI created |
-| <a name="output_msi_name"></a> [msi\_name](#output\_msi\_name) | MSI name |
-| <a name="output_msi_principal_id"></a> [msi\_principal\_id](#output\_msi\_principal\_id) | The ID of the Principal (User, Group or Service Principal) to assign the Role Definition |
+No outputs.
 <!-- END_TF_DOCS -->

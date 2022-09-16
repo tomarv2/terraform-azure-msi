@@ -2,7 +2,7 @@ terraform {
   required_version = ">= 1.0.1"
   required_providers {
     azurerm = {
-      version = "~> 2.98"
+      version = "~> 3.21.1"
     }
   }
 }
@@ -14,7 +14,12 @@ provider "azurerm" {
 module "msi" {
   source = "../"
 
-  resource_group_name = "demo-resource_group"
+  msi_config = {
+    "security-dev-security-base-identity" = {
+      resource_group = "<resource_group_name>"
+      location       = "westus2"
+    }
+  }
   # -----------------------------------------
   # Note: Do not change teamid and prjid once set.
   teamid = var.teamid

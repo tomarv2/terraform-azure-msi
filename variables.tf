@@ -8,22 +8,12 @@ variable "prjid" {
   type        = string
 }
 
-variable "resource_group_name" {
-  description = "Name of the resource group"
-  type        = string
+variable "msi_config" {
+  description = "MSI configuration"
+  type        = map(any)
+  default     = {}
 }
 
-variable "add_msi" {
-  description = "feature flag to deploy this resource or not"
-  default     = true
-  type        = bool
-}
-
-variable "location" {
-  description = "Specifies the supported Azure location where the resource exists"
-  type        = string
-  default     = "westus2"
-}
 
 variable "extra_tags" {
   description = "Additional tags to associate"
