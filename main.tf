@@ -1,9 +1,10 @@
 resource "azurerm_user_assigned_identity" "identity" {
-  count = var.add_msi ? 1 : 0
+  for_each = var.msi_config != null ? var.msi_config : {}
 
-  resource_group_name = var.resource_group_name
-  location            = var.location
-  name                = "${var.teamid}-${var.prjid}-identity"
-
+  resource_group_name = each.value.resource_group
+  location            = each.value.location
+  name                = each.key
   tags = merge(local.shared_tags, var.extra_tags)
 }
+
+
