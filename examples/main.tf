@@ -15,7 +15,7 @@ module "msi" {
   source = "../"
 
   msi_config = {
-    "security-dev-security-base-identity" = {
+    "demo-identity" = {
       resource_group = "<resource_group_name>"
       location       = "westus2"
     }
