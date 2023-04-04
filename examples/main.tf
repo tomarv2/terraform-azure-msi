@@ -14,14 +14,10 @@ provider "azurerm" {
 module "msi" {
   source = "../"
 
-  msi_config = {
+  config = {
     "demo-identity" = {
       resource_group = "<resource_group_name>"
       location       = "westus2"
     }
   }
-  # -----------------------------------------
-  # Note: Do not change teamid and prjid once set.
-  teamid = var.teamid
-  prjid  = var.prjid
 }
